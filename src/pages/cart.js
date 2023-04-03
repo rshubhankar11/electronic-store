@@ -1,10 +1,18 @@
 import React from "react";
+import Base from "../components/Base";
 
 const Cart = () => {
   return (
-    <div>
-      <h1>Cart Page</h1>
-    </div>
+    <Base
+      title="Cart"
+      buttonFlag="True"
+      buttonType="outline-warning"
+      description={null}
+    >
+      <div>
+        <h1>Cart Page</h1>
+      </div>
+    </Base>
   );
 };
 
