@@ -14,7 +14,7 @@ const Base = ({
   children,
 }) => {
   let MyStyle = {
-    height: "250px",
+    height: "200px",
   };
   return (
     <div>
@@ -33,6 +33,8 @@ const Base = ({
           )}
         </div>
       </Container>
+      {/* In Child we will get the containt of other componets Whe have to pace the children
+       prop bellow our Master pge containt and above footer */}
       {children}
       <Footer />
     </div>

@@ -7,12 +7,16 @@ import Service from "./pages/services";
 import Store from "./pages/store";
 import MyNavbar from "./components/Navbar";
 import Contact from "./pages/contact";
+import { ToastContainer } from "react-toastify";
 
 const App = () => {
   <h1>App Components</h1>;
   return (
     <>
       <BrowserRouter>
+        {/* We have to render ToastContainer once ,i.e we have to add it once 
+      in a porject but can be user Mulitiple time */}
+        <ToastContainer />
         <MyNavbar />
         <Routes>
           <Route path="/" element={<Index />} />

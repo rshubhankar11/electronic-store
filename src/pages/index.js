@@ -1,7 +1,23 @@
 import React from "react";
 import Base from "../components/Base";
+import Button from "react-bootstrap/esm/Button";
+import { toast } from "react-toastify";
 
 const Index = () => {
+  const SuccessToast = () => {
+    // toast is used to create a message
+    toast.success("This is Ract Toastify Success", {
+      // This objct with parameter also can be set on the <ToastContainer />
+      position: "bottom-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+  };
   return (
     <Base
       title="Home"
@@ -9,8 +25,9 @@ const Index = () => {
       buttonFlag="True"
       buttonType="secondary"
     >
-      <div>
-        <h1>Index Page</h1>
+      <div className="text-center">
+        <h2>This Poject is growing daily!!</h2>
+        <h3>Stay tuned for a complete veriosn soon...</h3>
         <p>
           Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veniam odio
           debitis aperiam placeat praesentium. Laboriosam temporibus deserunt
@@ -21,6 +38,9 @@ const Index = () => {
           quasi nostrum! Praesentium iste rem assumenda aut provident omnis sunt
           explicabo!
         </p>
+        <Button variant="success" onClick={SuccessToast}>
+          Testing Tostify Success
+        </Button>
       </div>
     </Base>
   );
