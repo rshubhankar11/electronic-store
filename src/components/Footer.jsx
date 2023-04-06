@@ -6,7 +6,7 @@ const Footer = () => {
     <div>
       <Container
         fluid
-        className="bg-dark text-white text-center fixed-bottom d-flex align-items-center justify-content-center"
+        className="bg-dark text-white text-center  justify-content-center"
       >
         <div>
           <h3>Our Products are Best</h3>

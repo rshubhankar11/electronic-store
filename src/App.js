@@ -8,6 +8,8 @@ import Store from "./pages/store";
 import MyNavbar from "./components/Navbar";
 import Contact from "./pages/contact";
 import { ToastContainer } from "react-toastify";
+import Login from "./pages/login";
+import Signup from "./pages/signup";
 
 const App = () => {
   <h1>App Components</h1>;
@@ -16,7 +18,16 @@ const App = () => {
       <BrowserRouter>
         {/* We have to render ToastContainer once ,i.e we have to add it once 
       in a porject but can be user Mulitiple time */}
-        <ToastContainer />
+        <ToastContainer
+          position="bottom-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          closeOnClick={true}
+          pauseOnHover={true}
+          draggable={true}
+          progress={undefined}
+          theme="dark"
+        />
         <MyNavbar />
         <Routes>
           <Route path="/" element={<Index />} />
@@ -25,6 +36,8 @@ const App = () => {
           <Route path="/services" element={<Service />} />
           <Route path="/srore" element={<Store />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
         </Routes>
       </BrowserRouter>
     </>

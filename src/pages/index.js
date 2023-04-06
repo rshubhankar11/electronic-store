@@ -2,6 +2,7 @@ import React from "react";
 import Base from "../components/Base";
 import Button from "react-bootstrap/esm/Button";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const Index = () => {
   const SuccessToast = () => {
@@ -17,6 +18,22 @@ const Index = () => {
       progress: undefined,
       theme: "dark",
     });
+  };
+  const options = {
+    method: "GET",
+    url: "https://jsonplaceholder.typicode.com/posts",
+  };
+  const getData = () => {
+    axios
+      .request(options)
+      .then(function (response) {
+        toast.success("Request success");
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        console.error(error);
+        toast.error("Somthing went Wrong");
+      });
   };
   return (
     <Base
@@ -38,6 +55,9 @@ const Index = () => {
           quasi nostrum! Praesentium iste rem assumenda aut provident omnis sunt
           explicabo!
         </p>
+        <Button variant="primary" onClick={getData}>
+          Get Data From Fake Api
+        </Button>
         <Button variant="success" onClick={SuccessToast}>
           Testing Tostify Success
         </Button>
