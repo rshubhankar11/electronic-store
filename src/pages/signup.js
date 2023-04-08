@@ -1,9 +1,18 @@
 import React from "react";
 import Base from "./../components/Base";
-import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
+import {
+  Button,
+  Card,
+  Col,
+  Container,
+  Form,
+  Row,
+  Spinner,
+} from "react-bootstrap";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { registerUser } from "../services/user.service";
+import { NavLink } from "react-router-dom";
 
 const Signup = () => {
   //* Here we will store the data
@@ -16,8 +25,9 @@ const Signup = () => {
     about: "",
   });
 
-  // *This will handel the change
+  let [loading, setLoading] = useState(false);
 
+  // *This will handel the change
   const handleChange = (event, property) => {
     console.log(event);
     setData({
@@ -26,6 +36,11 @@ const Signup = () => {
     });
   };
 
+  // !To handle error
+  let [myError, setMyError] = useState({
+    isError: false,
+    errorData: null,
+  });
   // *This will cleare the data
   const clearData = () => {
     setData({
@@ -36,13 +51,12 @@ const Signup = () => {
       gender: "",
       about: "",
     });
-  };
 
-  // // !To handle error
-  // let [error, setError] = useState({
-  //   isError: false,
-  //   errorData: null,
-  // });
+    setMyError({
+      isError: false,
+      errorData: null,
+    });
+  };
 
   // To save the user on submit
   const submitForm = (event) => {
@@ -71,6 +85,7 @@ const Signup = () => {
 
     // resgistering user
 
+    setLoading(true);
     registerUser(data)
       .then((userData) => {
         console.log(userData);
@@ -78,8 +93,17 @@ const Signup = () => {
         clearData();
       })
       .catch((error) => {
+        console.clear();
         console.log(error);
+        setMyError({
+          isError: true,
+          errorData: error,
+        });
+
         toast.error("Somthing went wrong !!");
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
@@ -93,7 +117,13 @@ const Signup = () => {
           */}
           {/* {JSON.stringify(data)} */}
           <Col sm={{ span: 8, offset: 2 }}>
-            <Card className="my-3 shadow">
+            <Card
+              className="my-3 shadow"
+              style={{
+                position: "relative",
+                top: -60,
+              }}
+            >
               <Card.Body>
                 <div>
                   <Container className="text-center">
@@ -116,7 +146,11 @@ const Signup = () => {
                         handleChange(event, "name");
                       }}
                       value={data.name}
+                      isInvalid={myError?.errorData?.response?.data?.name}
                     />
+                    <Form.Control.Feedback type="inValid">
+                      {myError.errorData?.response?.data?.name}
+                    </Form.Control.Feedback>
                   </Form.Group>
 
                   <Form.Group className="mb-3" controlId="formEmail">
@@ -128,7 +162,11 @@ const Signup = () => {
                         handleChange(event, "email");
                       }}
                       value={data.email}
+                      isInvalid={myError?.errorData?.response?.data?.email}
                     />
+                    <Form.Control.Feedback type="inValid">
+                      {myError.errorData?.response?.data?.email}
+                    </Form.Control.Feedback>
                     <Form.Text className="text-muted">
                       We'll never share your email with anyone else.
                     </Form.Text>
@@ -143,7 +181,11 @@ const Signup = () => {
                         handleChange(event, "password");
                       }}
                       value={data.password}
+                      isInvalid={myError?.errorData?.response?.data?.password}
                     />
+                    <Form.Control.Feedback type="inValid">
+                      {myError.errorData?.response?.data?.password}
+                    </Form.Control.Feedback>
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formConfirmPassword">
                     <Form.Label>Re-enter Password</Form.Label>
@@ -196,16 +238,29 @@ const Signup = () => {
                         handleChange(event, "about");
                       }}
                       value={data.about}
+                      isInvalid={myError?.errorData?.response?.data?.about}
                     ></Form.Control>
+                    <Form.Control.Feedback type="inValid">
+                      {myError.errorData?.response?.data?.name}
+                    </Form.Control.Feedback>
                   </Form.Group>
                   <Container className="text-center">
                     <p>
-                      Already registtered!! <a href="/">Login</a>
+                      Already registtered!! <NavLink to="/login">Login</NavLink>
                     </p>
                   </Container>
                   <Container className="text-center">
                     <Button variant="success" size="sm" type="submit">
-                      Register
+                      <Spinner
+                        as="span"
+                        animation="border"
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                        hidden={!loading}
+                      />
+                      <span hidden={!loading}>Loading...</span>
+                      <span hidden={loading}>Register</span>
                     </Button>
                     <Button
                       className="ms-2"
@@ -225,7 +280,11 @@ const Signup = () => {
     );
   };
 
-  return <Base>{registerForm()}</Base>;
+  return (
+    <Base title="Electro Store Signup" description={null}>
+      {registerForm()}
+    </Base>
+  );
 };
 
 export default Signup;
